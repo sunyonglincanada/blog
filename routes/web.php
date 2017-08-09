@@ -19,3 +19,6 @@ Route::get('about', 'PagesController@getAbout');
 
 // Contact Page
 Route::get('contact', 'PagesController@getContact');
+
+// Post Resource Controller ( CRUD )
+Route::resource('posts', 'PostController');
