@@ -1,7 +1,9 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: Eric
- * Date: 2017/8/11
- * Time: 11:32
- */
+@extends('main')
+
+@section('title', '| View Post')
+
+@section('content')
+
+    <p class="lead">This is the blog post</p>
+
+@endsection
