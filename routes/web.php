@@ -11,6 +11,9 @@
 |
 */
 
+// slug format: w: word d:number -:dash _:underscore
+Route::get('/blog/{slug}', ['as' => 'blog.single', 'uses' => 'BlogController@getSingle'])->where('slug', '[\w\d\-\_]+');
+
 // Home Page
 Route::get('/', 'PagesController@getIndex');
 
