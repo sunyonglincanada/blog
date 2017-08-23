@@ -11,9 +11,22 @@
 |
 */
 
+
+
+// Authentication Routes
+Route::get('auth/login', 'Auth\LoginController@getLogin');
+Route::post('auth/login', 'Auth\LoginController@postLogin');
+Route::get('auth/logout', 'Auth\LoginController@postLogout');
+
+// Registration Routes
+Route::get('auth/register', 'Auth\LoginController@getRegister');
+Route::post('auth/register', 'Auth\LoginController@postRegister');
+
+
 // slug format: w: word d:number -:dash _:underscore
 Route::get('/blog/{slug}', ['as' => 'blog.single', 'uses' => 'BlogController@getSingle'])->where('slug', '[\w\d\-\_]+');
 
+// Blog Page
 Route::get('blog', ['uses' => 'BlogController@getIndex', 'as' => 'blog.index']);
 
 // Home Page
