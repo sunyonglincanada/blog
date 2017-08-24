@@ -14,14 +14,21 @@
 
 
 // Authentication Routes
-Route::get('auth/login', 'Auth\LoginController@getLogin');
-Route::post('auth/login', 'Auth\LoginController@postLogin');
-Route::get('auth/logout', 'Auth\LoginController@postLogout');
+//Route::get('auth/login', 'Auth\LoginController@getLogin');
+//Route::post('auth/login', 'Auth\LoginController@postLogin');
+//Route::get('auth/logout', 'Auth\LoginController@postLogout');
+//
+//// Registration Routes
+//Route::get('auth/register', 'Auth\LoginController@getRegister');
+//Route::post('auth/register', 'Auth\LoginController@postRegister');
 
-// Registration Routes
-Route::get('auth/register', 'Auth\LoginController@getRegister');
-Route::post('auth/register', 'Auth\LoginController@postRegister');
+//Authentication Routes(login and register process) -- version 5.4
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::auth();
 
 // slug format: w: word d:number -:dash _:underscore
 Route::get('/blog/{slug}', ['as' => 'blog.single', 'uses' => 'BlogController@getSingle'])->where('slug', '[\w\d\-\_]+');
@@ -40,3 +47,4 @@ Route::get('contact', 'PagesController@getContact');
 
 // Post Resource Controller ( CRUD )
 Route::resource('posts', 'PostController');
+
