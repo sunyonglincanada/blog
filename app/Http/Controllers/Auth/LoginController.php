@@ -29,16 +29,6 @@ class LoginController extends Controller
 
 
     /**
-     * Authenticate and register users
-     * @return mixed
-     */
-    protected function guard()
-    {
-
-        return Auth::guard('guard-name');
-    }
-
-    /**
      * Create a new controller instance.
      *
      * @return void
