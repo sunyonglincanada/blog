@@ -27,6 +27,17 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
+
+    /**
+     * Authenticate and register users
+     * @return mixed
+     */
+    protected function guard()
+    {
+
+        return Auth::guard('guard-name');
+    }
+
     /**
      * Create a new controller instance.
      *

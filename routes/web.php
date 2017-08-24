@@ -30,6 +30,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::auth();
 
+Route::get('profile', function () {
+    // Only authenticated users may enter...
+})->middleware('auth');
+
 // slug format: w: word d:number -:dash _:underscore
 Route::get('/blog/{slug}', ['as' => 'blog.single', 'uses' => 'BlogController@getSingle'])->where('slug', '[\w\d\-\_]+');
 
