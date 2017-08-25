@@ -56,3 +56,6 @@ Route::resource('posts', 'PostController');
 // Category Resource Controller ( CRUD )
 Route::resource('categories', 'CategoryController', ['except' => ['create']]);
 
+// Tags
+Route::resource('tags', 'TagController', ['except' => ['create']]);
+
