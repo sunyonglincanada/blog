@@ -52,3 +52,7 @@ Route::get('contact', 'PagesController@getContact');
 // Post Resource Controller ( CRUD )
 Route::resource('posts', 'PostController');
 
+
+// Category Resource Controller ( CRUD )
+Route::resource('categories', 'CategoryController', ['except' => ['create']]);
+
