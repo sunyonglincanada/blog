@@ -48,6 +48,8 @@ Route::get('about', 'PagesController@getAbout');
 
 // Contact Page
 Route::get('contact', 'PagesController@getContact');
+// Contact Page Send Email Route
+Route::post('contact', 'PagesController@postContact');
 
 // Post Resource Controller ( CRUD )
 Route::resource('posts', 'PostController');
