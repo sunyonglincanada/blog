@@ -184,6 +184,8 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+        // delete the relationship in post_tag table for corresponding post id
+        $post->tags()->detach();
 
         $post->delete();
 

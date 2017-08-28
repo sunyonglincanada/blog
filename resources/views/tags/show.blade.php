@@ -11,6 +11,14 @@
         <div class="col-md-2 col-md-offset-2">
             <a href="{{ route('tags.edit', $tag->id) }}" class="btn btn-primary pull-right btn-block" style="margin-top:20px;">Edit</a>
         </div>
+
+        <div class="col-md-2 col-md-offset-2">
+            {{ Form::open(['route' => ['tags.destroy', $tag->id], 'method' => 'DELETE']) }}
+
+            {{ Form::submit('Delete', ['class' => 'btn btn-danger btn-block', 'style' => 'margin-top: 20px;']) }}
+
+            {{ Form::close() }}
+        </div>
     </div>
 
     <div class="row">
