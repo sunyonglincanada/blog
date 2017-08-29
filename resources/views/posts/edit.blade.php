@@ -61,6 +61,16 @@
 
     {!! Html::script('js/select2.min.js') !!}
 
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'link code',
+            menubar: false
+        });
+    </script>
+
     <script type="text/javascript">
         $('.select2-multi').select2();
         $('.select2-multi').select2().val({!! json_encode($post->tags()->pluck('tags.id')) !!}).trigger('change');
