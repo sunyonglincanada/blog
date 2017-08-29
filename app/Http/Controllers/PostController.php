@@ -9,6 +9,7 @@ use App\Tag;
 use Purifier;
 use Session;
 use Image;
+use Storage;
 
 class PostController extends Controller
 {
@@ -64,6 +65,7 @@ class PostController extends Controller
            'slug'           => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
            'category_id'    => 'required|integer',
            'body'           => 'required',
+           'featured_image' => 'sometimes|image'
         ));
 
         // store in the database
@@ -145,21 +147,15 @@ class PostController extends Controller
     {
         // Validate the data
         $post = Post::find($id);
-        // if the post slug is not changed, only update other meta and keep the slug remain the same in the database
-        if($request->input('slug') == $post->slug){
-            $this->validate($request, array(
-                'title' => 'required|max:255',
-                'category_id'    => 'required|integer',
-                'body'  => 'required',
-            ));
-        }else{
-            $this->validate($request, array(
-                'title' => 'required|max:255',
-                'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
-                'category_id'    => 'required|integer',
-                'body'  => 'required',
-            ));
-        }
+
+        $this->validate($request, array(
+           'title'          => 'required|max:255',
+           'slug'           => "required|alpha_dash|min:5|max:255|unique:posts,slug,$id",
+           'category_id'    => 'required|integer',
+           'body'           => 'required',
+           'featured_image' => 'image'
+        ));
+
 
 
         // Save the data to the database
@@ -169,6 +165,22 @@ class PostController extends Controller
         $post->slug  = $request->input('slug');
         $post->category_id  = $request->input('category_id');
         $post->body  = Purifier::clean($request->input('body'));
+
+        if($request->hasFile('featured_image') ){
+            // Delete the old image
+            $image = $request->file('featured_image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/'. $filename);
+            Image::make($image)->resize(800,400)->save($location);
+            $oldFileName = $post->image;
+
+            // Add the new image
+            $post->image = $filename;
+
+            // Update the database
+            Storage::delete($oldFileName);
+        }
+
 
         $post->save();
 
@@ -199,6 +211,8 @@ class PostController extends Controller
         $post = Post::find($id);
         // delete the relationship in post_tag table for corresponding post id
         $post->tags()->detach();
+        // delete the old image in the post
+        Storage::delete($post->image);
 
         $post->delete();
 
