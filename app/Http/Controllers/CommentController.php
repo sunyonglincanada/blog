@@ -9,6 +9,12 @@ use Session;
 
 class CommentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => 'store'] );
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -79,7 +85,8 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comment = Comment::find($id);
+        return view('comments.edit')->withComment($comment);
     }
 
     /**
@@ -91,8 +98,31 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $comment = Comment::find($id);
+        $this->validate($request, array(
+            'comment' => 'required|min:5|max:2000'
+        ));
+
+        $comment->comment = $request->comment;
+        $comment->save();
+
+        Session::flash('success', 'Comment Updated Successfully!');
+
+        return redirect()->route('posts.show', $comment->post->id);
+
     }
+
+    /**
+     * Delete Comment
+     * @param $id
+     * @return mixed
+     */
+    public function delete($id)
+    {
+        $comment = Comment::find($id);
+        return view('comments.delete')->withComment($comment);
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -102,6 +132,11 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::find($id);
+        $post_id = $comment->post->id;
+        $comment->delete();
+
+        Session::flash('success','Delete Comment Successfully!');
+        return redirect()->route('posts.show', $post_id);
     }
 }
