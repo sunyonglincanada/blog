@@ -179,7 +179,10 @@ return [
         App\Providers\RouteServiceProvider::class,
         // Mews Purifier
         Mews\Purifier\PurifierServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class
+        Intervention\Image\ImageServiceProvider::class,
+
+        // Third Party Service Providers
+        Laratrust\LaratrustServiceProvider::class,
 
     ],
 
@@ -233,7 +236,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         // Mews Purifier
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Laratrust' => Laratrust\LaratrustFacade::class,
 
     ],
 
